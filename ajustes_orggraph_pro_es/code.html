@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-surface dark:bg-inverse-surface" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ajustes - OrgGraph Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#d8e2ff",
+                    "surface-container-highest": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#001a42",
+                    "tertiary-container": "#002113",
+                    "surface-tint": "#565e74",
+                    "surface-dim": "#d8dadc",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-tertiary-container": "#009668",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-surface": "#191c1e",
+                    "outline-variant": "#c6c6cd",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "surface": "#f7f9fb",
+                    "surface-bright": "#f7f9fb",
+                    "inverse-primary": "#bec6e0",
+                    "on-primary-container": "#7c839b",
+                    "primary": "#000000",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-primary-fixed": "#131b2e",
+                    "primary-fixed": "#dae2fd",
+                    "on-secondary-container": "#fefcff",
+                    "on-background": "#191c1e",
+                    "on-primary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "tertiary": "#000000",
+                    "on-tertiary-fixed": "#002113",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e6e8ea",
+                    "secondary-container": "#2170e4",
+                    "secondary": "#0058be",
+                    "primary-container": "#131b2e",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-surface-variant": "#45464d",
+                    "on-tertiary-fixed-variant": "#005236"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "node-gap-v": "48px",
+                    "node-gap-h": "24px",
+                    "container-padding": "32px",
+                    "gutter": "16px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-display": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="h-full flex antialiased bg-background text-on-background font-body-lg text-body-lg">
+<!-- SideNavBar -->
+<nav aria-label="Sidebar" class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-surface dark:bg-inverse-surface shadow-sm z-20 flex-col py-margin-desktop text-primary dark:text-inverse-primary">
+<div class="px-gutter mb-margin-desktop flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">OrgGraph Pro</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Edición Enterprise</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2 px-gutter">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors scale-98 active:opacity-80 transition-all text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Panel
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors scale-98 active:opacity-80 transition-all text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                Editor de Organigramas
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors scale-98 active:opacity-80 transition-all text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+                Directorio
+            </a>
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary dark:text-secondary-fixed-dim font-bold border-r-4 border-secondary bg-surface-container dark:bg-surface-variant scale-98 active:opacity-80 transition-all text-body-md font-body-md" href="#">
+<span class="material-symbols-outlined filled" data-icon="settings" data-weight="fill">settings</span>
+                Ajustes
+            </a>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="hidden md:flex fixed top-0 right-0 left-64 h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant z-10 justify-between items-center px-container-padding text-primary dark:text-inverse-primary w-[calc(100%-16rem)]">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-md font-body-md focus:ring-2 focus:ring-secondary outline-none transition-shadow" placeholder="Buscar..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Notifications" class="p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Help" class="p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-70">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container ml-4 overflow-hidden shrink-0 cursor-pointer">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate user on a solid light background, well-lit, realistic, modern corporate SaaS styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJqx8Dopwi271z7n4F_KmpRv46MLNCk4aB1tK1TcE5msdceNtNvf6y4QI11fB--A_MXDB1u6m7p9tAgQDjiugdAtjBaLTAyCrMpWz_2FfWMLR4Gr45L7xm2rfFZ-XlCMofbsRBkRNGdI4V2-SvjbIPK6VKenr_uFSeYyS4dgVx32S_uD1m0llbIJtaYQF8fMGWNm-YrFgcMP3znYrZ-2opymZ3AkNly5tz6JbvzvRdqSCffgVqJa96"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-16 min-h-screen bg-background">
+<div class="max-w-5xl mx-auto px-margin-mobile md:px-container-padding py-margin-desktop">
+<div class="mb-8">
+<h2 class="text-headline-display font-headline-display text-on-background">Ajustes</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-2">Gestione su cuenta, preferencias de la organización y acceso de usuarios.</p>
+</div>
+<!-- Tabs -->
+<div class="border-b border-outline-variant mb-8 flex gap-8">
+<button class="pb-4 text-headline-md font-headline-md text-primary font-bold border-b-2 border-primary" id="tab-profile">Perfil de Usuario</button>
+<button class="pb-4 text-headline-md font-headline-md text-on-surface-variant hover:text-on-surface transition-colors" id="tab-org">Organización</button>
+<button class="pb-4 text-headline-md font-headline-md text-on-surface-variant hover:text-on-surface transition-colors" id="tab-users">Gestión de Usuarios</button>
+</div>
+<!-- Tab Content: User Profile (Active) -->
+<div class="space-y-8" id="content-profile">
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 p-8 flex flex-col md:flex-row gap-8 items-start">
+<div class="shrink-0 flex flex-col items-center gap-4">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-surface shadow-sm relative group cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate user on a solid light background, well-lit, realistic, modern corporate SaaS styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR3VWNmoS82ZwWnWzMDobbe3FmHCAJVPWT1PMppopMgiN757g_U85udftdwBAydE3bizaHth0juUfi9vFo1K7CzXWSNa6KfSP7VvcT6cO1tr0DOve1A-WDwvqRp-te_7WiU7dhOTbz6YVbz1BKUKPxslcYw8dG1kefi3JNYdx9jbyfjGSdqSOwc8m2gXyplMwBsgUSONtbQFJDTAs-mQHwZQg_WwE0QK7o6AJmILXoz2A_usd-cI0T"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<button class="text-label-sm font-label-sm font-bold text-secondary hover:text-secondary-container transition-colors uppercase tracking-wider">Cambiar Avatar</button>
+</div>
+<div class="flex-1 w-full space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">Nombre</label>
+<input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-body-md font-body-md text-on-surface transition-all" type="text" value="Jane"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">Apellido</label>
+<input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-body-md font-body-md text-on-surface transition-all" type="text" value="Doe"/>
+</div>
+<div class="md:col-span-2">
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">Correo Electrónico</label>
+<input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-body-md font-body-md text-on-surface transition-all" disabled="" type="email" value="jane.doe@orggraphpro.com"/>
+</div>
+<div class="md:col-span-2">
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">Puesto de Trabajo</label>
+<input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary outline-none text-body-md font-body-md text-on-surface transition-all" type="text" value="Director of Operations"/>
+</div>
+</div>
+<div class="pt-4 flex justify-end gap-4">
+<button class="px-6 py-2.5 rounded-lg border border-outline text-on-surface hover:bg-surface-container-low transition-colors text-label-caps font-label-caps uppercase">Cancelar</button>
+<button class="px-6 py-2.5 rounded-lg bg-primary text-on-primary hover:bg-primary/90 transition-colors shadow-sm text-label-caps font-label-caps uppercase">Guardar Cambios</button>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 p-8">
+<h3 class="text-headline-lg font-headline-lg text-on-surface mb-6">Seguridad y Autenticación</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between border-b border-outline-variant/50 pb-6">
+<div>
+<h4 class="text-headline-md font-headline-md text-on-surface">Contraseña</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">Cambiado por última vez hace 3 meses</p>
+</div>
+<button class="px-4 py-2 rounded-lg border border-secondary text-secondary hover:bg-secondary/5 transition-colors text-label-sm font-label-sm font-semibold">Actualizar Contraseña</button>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-headline-md font-headline-md text-on-surface flex items-center gap-2">Autenticación de Dos Factores <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-tertiary-fixed-dim text-on-tertiary-fixed-variant">Activado</span></h4>
+<p class="text-body-md font-body-md text-on-surface-variant">Añada una capa adicional de seguridad a su cuenta.</p>
+</div>
+<button class="px-4 py-2 rounded-lg border border-outline text-on-surface hover:bg-surface-container-low transition-colors text-label-sm font-label-sm font-semibold">Gestionar 2FA</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<script>
+        // Simple tab switching logic for demonstration
+        const tabs = ['profile', 'org', 'users'];
+        tabs.forEach(tab => {
+            const btn = document.getElementById(`tab-${tab}`);
+            if(btn) {
+                btn.addEventListener('click', () => {
+                    // Reset all tabs
+                    tabs.forEach(t => {
+                        const tBtn = document.getElementById(`tab-${t}`);
+                        if(tBtn) {
+                            tBtn.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary');
+                            tBtn.classList.add('text-on-surface-variant');
+                        }
+                    });
+                    // Set active
+                    btn.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary');
+                    btn.classList.remove('text-on-surface-variant');
+                });
+            }
+        });
+    </script>
+</body></html>

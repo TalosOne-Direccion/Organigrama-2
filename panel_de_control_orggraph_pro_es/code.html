@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OrgGraph Pro - Panel de Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#d8e2ff",
+                      "surface-container-highest": "#e0e3e5",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#001a42",
+                      "tertiary-container": "#002113",
+                      "surface-tint": "#565e74",
+                      "surface-dim": "#d8dadc",
+                      "surface-variant": "#e0e3e5",
+                      "background": "#f7f9fb",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#f2f4f6",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "on-tertiary-container": "#009668",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-surface": "#191c1e",
+                      "outline-variant": "#c6c6cd",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#2d3133",
+                      "surface": "#f7f9fb",
+                      "surface-bright": "#f7f9fb",
+                      "inverse-primary": "#bec6e0",
+                      "on-primary-container": "#7c839b",
+                      "primary": "#000000",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-primary-fixed": "#131b2e",
+                      "primary-fixed": "#dae2fd",
+                      "on-secondary-container": "#fefcff",
+                      "on-background": "#191c1e",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "tertiary": "#000000",
+                      "on-tertiary-fixed": "#002113",
+                      "primary-fixed-dim": "#bec6e0",
+                      "outline": "#76777d",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#e6e8ea",
+                      "secondary-container": "#2170e4",
+                      "secondary": "#0058be",
+                      "primary-container": "#131b2e",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-surface-variant": "#45464d",
+                      "on-tertiary-fixed-variant": "#005236"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "node-gap-v": "48px",
+                      "node-gap-h": "24px",
+                      "container-padding": "32px",
+                      "gutter": "16px",
+                      "margin-desktop": "40px",
+                      "unit": "4px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-display": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        body { background-color: #f7f9fb; }
+        .node-shadow { box-shadow: 0px 4px 6px -1px rgba(0,0,0,0.1); }
+        .node-hover-lift:hover { transform: translateY(-2px); box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface shadow-sm z-30 flex flex-col py-margin-desktop">
+<div class="px-gutter mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-md font-bold">O</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface">OrgGraph Pro</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Edición Empresarial</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-unit">
+<ul class="space-y-1">
+<!-- Dashboard (Active) -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-secondary font-bold border-r-4 border-secondary bg-surface-container hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all rounded-r-none rounded-l-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-label-sm font-label-sm">Panel de Control</span>
+</a>
+</li>
+<!-- Chart Editor -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm">Editor de Organigramas</span>
+</a>
+</li>
+<!-- Directory -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm">Directorio</span>
+</a>
+</li>
+<!-- Settings -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-sm font-label-sm">Configuración</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="px-gutter mt-auto">
+<div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A professional headshot of a corporate executive in a bright modern office setting. Light mode, professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWw4bReYXMGQz-quj0u6W7pXB4D38eawgRnQDAOp5_HBZbMCBzVB0fL97KUHKmQRziiRelJ5iFocd1VWlxKoMk-UUKh5pI41VXQ6zdC4D4oJgosm0oZbxjiBonogNqE_Gjg1LHGXUvK0z6p1WWahku0emwW-nTTSPGsKSCSWWcQIyke97cRRZCk4foFPVAjeg7CmljKLqu2aMwuvuu7oj9MDymxXKs_dxxuOpmORchpKPAqFb9MZ7-"/>
+<div class="flex-1 min-w-0">
+<p class="text-label-sm font-label-sm text-on-surface truncate">Administrador</p>
+<p class="text-[10px] text-on-surface-variant truncate">Sede Global</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface border-b border-outline-variant z-20 flex justify-between items-center px-container-padding">
+<!-- Search Bar on Left -->
+<div class="flex-1 max-w-md relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-full text-body-md font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-shadow" placeholder="Buscar empleados, departamentos..." type="text"/>
+</div>
+<!-- Trailing Icons & Profile -->
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full Active: opacity-70 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full Active: opacity-70 transition-opacity">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden cursor-pointer">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User Profile Avatar. Professional corporate portrait, bright lighting, light mode palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRCcDq87YCoPsLr-tB0JZd_kfmuzQ3f1l07Ap94DD8-7km6qtkS1RynbfJ8mo3UKFC1AfInFLKnnHlVvC7sUy5hwI5qX_h7inc1j0pxrokuOZ_lJru6bnihK3eK9vBNbY4luE7mutk9PX5wpXSpMQwEdcMAINLBF4p0d84hzwpS-xAscTzK247X7pi5UDxZ880ZImbwjLGXrWS1-3qNfcr4QhedC29zUAxAqygBEFeicVoKYBBLmHl"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-16 min-h-screen">
+<div class="p-container-padding max-w-7xl mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-headline-display font-headline-display text-on-surface">Visión General</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-1">Métricas de alto nivel para la estructura global de Acme Corp.</p>
+</div>
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded font-label-sm text-label-sm flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Nuevo Organigrama
+                </button>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 node-shadow border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined">group</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Total de Empleados</h3>
+</div>
+<div>
+<p class="text-4xl font-bold text-on-surface">1,248</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">trending_up</span>
+                            +12 este mes
+                        </p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 node-shadow border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined">domain</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Departamentos</h3>
+</div>
+<div>
+<p class="text-4xl font-bold text-on-surface">24</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">En 4 regiones</p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 node-shadow border border-outline-variant/30 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-error-container/20 rounded-full blur-xl"></div>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error">work</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Vacantes</h3>
+</div>
+<div class="relative z-10">
+<p class="text-4xl font-bold text-on-surface">36</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">Pendiente de aprobación: 5</p>
+</div>
+</div>
+</div>
+<!-- Split Layout: Recent Activity & Popular Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Popular Charts (Takes 2 columns) -->
+<div class="lg:col-span-2 space-y-4">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2">
+<h3 class="text-headline-lg font-headline-lg text-on-surface">Organigramas Populares</h3>
+<a class="text-label-sm font-label-sm text-secondary hover:underline" href="#">Ver Todo</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Chart Card 1 -->
+<div class="bg-surface-container-lowest rounded-lg p-4 node-shadow border border-outline-variant/50 node-hover-lift transition-all cursor-pointer">
+<div class="h-32 bg-surface-container rounded mb-4 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#c6c6cd_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+<span class="material-symbols-outlined text-4xl text-on-surface-variant relative z-10">account_tree</span>
+</div>
+<h4 class="text-body-lg font-body-lg font-semibold text-on-surface">Ingeniería Global</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">Editado por última vez hace 2h</p>
+<div class="mt-4 flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="Small round avatar of a corporate employee. Light professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoWm0PNsCCFTzvqYRGBmNAk6-ObvaTQvVr7b-Xd_8EXYgsPwfd_MYvd_-KJJBSfiRRWU0A03VmmAHOaci0HUolWlmP0zc5Me9J0KVMx_gB1ueMJh-_4uj4o2Zv2spdnYzDdFnOeBeUsQlTrT5e6XHO1a-d9kW0R5IeO3ecdqeWWltIONICV0KADCPotQKk4RIegTJFL7908etVWArZqLFAVjmoQIaeNAW3nIhoQvDOLrYgr_yjHxXB"/>
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="Small round avatar of a corporate employee. Light professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkMrHYpUhsOQoLHj0ZVDq4hH2LnpmnLIZG_Dgl3J8tq6oWIDADEkVoWOhRN8pUVjVs3_PKgyFSSAlTnrtz0xA3zbX2bs5Z4PcrgY7FH4Zo_dzN9otDsa6a_TBxQo61EdcfNjiuSe9YQRyByJOA8c-vJ0Pcp72MJv4MGgdAUn_Zc1OwOUIU99pptSc7rIR8SwLUNq1NfeFkx2GkRGrXjkZ68vrkg_c1cm_EM2563W3EN8I6cQGzM6Ud"/>
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-lowest bg-surface-container flex items-center justify-center text-[10px] text-on-surface-variant">+3</div>
+</div>
+</div>
+<!-- Chart Card 2 -->
+<div class="bg-surface-container-lowest rounded-lg p-4 node-shadow border border-outline-variant/50 node-hover-lift transition-all cursor-pointer">
+<div class="h-32 bg-surface-container rounded mb-4 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#c6c6cd_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+<span class="material-symbols-outlined text-4xl text-on-surface-variant relative z-10">group_work</span>
+</div>
+<h4 class="text-body-lg font-body-lg font-semibold text-on-surface">Reorg. de Marketing Q3</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">Borrador • Editado por última vez ayer</p>
+<div class="mt-4 flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="Small round avatar of a corporate employee. Light professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB83D0f74hAoLwybX2W6Yy-UrTYMA5Owp1TCSy8p_5jm3AQWzHLh-N5rZ8APkdoJdhGMx6aNIsEU2RfuakKjpg0VKWIJmWFTcgCRQvy87A7HKW-FYTOBPNPx0j2_bVp-fpbdFHHyisWS9Zc_qpo_zw_E3BOANlORFI7K9VGIfuDFnElEeJTGLaon6Owu1WXfKUt6HJMCjQpIEz4J7_HgEknAmzen95ltYwVwUiOXgrliUEdKpKStXP"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity (Takes 1 column) -->
+<div class="space-y-4">
+<h3 class="text-headline-lg font-headline-lg text-on-surface border-b border-outline-variant pb-2">Actividad Reciente</h3>
+<div class="bg-surface-container-lowest rounded-lg node-shadow border border-outline-variant/50 p-4">
+<ul class="space-y-6 relative before:absolute before:inset-0 before:ml-[15px] before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-outline-variant before:to-transparent">
+<!-- Activity Item 1 -->
+<li class="relative flex items-start gap-4">
+<div class="relative z-10 w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0 border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[16px] text-on-secondary-container">edit</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface"><span class="font-semibold">Sarah J.</span> movió a <span class="font-semibold">David Lee</span> a <span class="text-secondary">Diseño de Producto</span></p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">hace 10 minutos</p>
+</div>
+</li>
+<!-- Activity Item 2 -->
+<li class="relative flex items-start gap-4">
+<div class="relative z-10 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0 border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">add_box</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface"><span class="font-semibold">Administrador</span> creó una nueva rama <span class="text-secondary">Ventas EMEA</span></p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">hace 2 horas</p>
+</div>
+</li>
+<!-- Activity Item 3 -->
+<li class="relative flex items-start gap-4">
+<div class="relative z-10 w-8 h-8 rounded-full bg-error-container flex items-center justify-center shrink-0 border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[16px] text-on-error-container">person_remove</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-on-surface"><span class="font-semibold">Sincronización de RRHH</span> desactivó 3 perfiles</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Ayer</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

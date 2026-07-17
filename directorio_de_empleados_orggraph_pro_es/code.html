@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Directorio de Empleados - OrgGraph Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "secondary-fixed": "#d8e2ff",
+                            "surface-container-highest": "#e0e3e5",
+                            "error": "#ba1a1a",
+                            "on-secondary-fixed": "#001a42",
+                            "tertiary-container": "#002113",
+                            "surface-tint": "#565e74",
+                            "surface-dim": "#d8dadc",
+                            "surface-variant": "#e0e3e5",
+                            "background": "#f7f9fb",
+                            "on-tertiary": "#ffffff",
+                            "surface-container-low": "#f2f4f6",
+                            "error-container": "#ffdad6",
+                            "on-primary-fixed-variant": "#3f465c",
+                            "on-error": "#ffffff",
+                            "tertiary-fixed-dim": "#4edea3",
+                            "on-tertiary-container": "#009668",
+                            "tertiary-fixed": "#6ffbbe",
+                            "on-surface": "#191c1e",
+                            "outline-variant": "#c6c6cd",
+                            "on-secondary": "#ffffff",
+                            "inverse-surface": "#2d3133",
+                            "surface": "#f7f9fb",
+                            "surface-bright": "#f7f9fb",
+                            "inverse-primary": "#bec6e0",
+                            "on-primary-container": "#7c839b",
+                            "primary": "#000000",
+                            "inverse-on-surface": "#eff1f3",
+                            "on-primary-fixed": "#131b2e",
+                            "primary-fixed": "#dae2fd",
+                            "on-secondary-container": "#fefcff",
+                            "on-background": "#191c1e",
+                            "on-primary": "#ffffff",
+                            "surface-container-lowest": "#ffffff",
+                            "surface-container": "#eceef0",
+                            "secondary-fixed-dim": "#adc6ff",
+                            "tertiary": "#000000",
+                            "on-tertiary-fixed": "#002113",
+                            "primary-fixed-dim": "#bec6e0",
+                            "outline": "#76777d",
+                            "on-error-container": "#93000a",
+                            "surface-container-high": "#e6e8ea",
+                            "secondary-container": "#2170e4",
+                            "secondary": "#0058be",
+                            "primary-container": "#131b2e",
+                            "on-secondary-fixed-variant": "#004395",
+                            "on-surface-variant": "#45464d",
+                            "on-tertiary-fixed-variant": "#005236"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "node-gap-v": "48px",
+                            "node-gap-h": "24px",
+                            "container-padding": "32px",
+                            "gutter": "16px",
+                            "margin-desktop": "40px",
+                            "unit": "4px",
+                            "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                            "headline-display": ["Inter"],
+                            "body-md": ["Inter"],
+                            "label-sm": ["Inter"],
+                            "headline-lg": ["Inter"],
+                            "label-caps": ["Inter"],
+                            "headline-md": ["Inter"],
+                            "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                            "headline-display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                            "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                            "headline-md": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+                            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface shadow-sm z-20 flex flex-col h-full py-margin-desktop">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined icon-fill">hub</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface">OrgGraph Pro</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Edición Empresarial</p>
+</div>
+</div>
+<div class="flex-1 px-4 space-y-2 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-sm font-label-sm">Panel de control</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm">Editor de Organigramas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary font-bold border-r-4 border-secondary bg-surface-container-low scale-98 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined icon-fill">groups</span>
+<span class="text-label-sm font-label-sm">Directorio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors scale-98 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-sm font-label-sm">Configuración</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen relative">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface border-b border-outline-variant z-10 flex justify-between items-center px-container-padding w-full">
+<div class="flex items-center flex-1 max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" placeholder="Buscar en el directorio..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors Active: opacity-70 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors Active: opacity-70 transition-opacity">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a modern office setting. Crisp lighting, shallow depth of field, high-resolution portrait reflecting modern enterprise aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByENq9mop2GG_Ak8G7hUH6-ubtIMoZ1oWqVLcgr8jwQ_NCr7ydxSZgZBL8eqJ1mbIwmI18PrGiSxrWy-NQRkSTEMcH9ZUT89gOgsc_J9XDc06-r-K1ckDFDqMLFVe2jp_nkSsylE4Wp51XaL7UDHr5x6Df71Eo5DIc1p8IsCFbLgIEJPGehFFHSG8szifZyzTb9oKLFv6pmcqmUtYyMpPFaFV0_XNtV_rVGRzVGOy1ex0hzf42zmkV"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 mt-16 p-margin-desktop overflow-x-hidden">
+<!-- Page Header & Actions -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-headline-display font-headline-display text-on-surface mb-2">Directorio de Empleados</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Gestione y vea a todos los miembros del equipo de la organización.</p>
+</div>
+<button class="px-6 py-3 bg-primary text-on-primary rounded-lg text-label-sm font-label-sm flex items-center gap-2 hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined">person_add</span>
+                    Añadir Empleado
+                </button>
+</div>
+<!-- Filters & Controls Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-8 flex flex-wrap gap-4 items-center justify-between shadow-sm">
+<div class="flex gap-2">
+<select class="bg-surface border border-outline-variant rounded-md px-3 py-1.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-secondary">
+<option>Todos los Departamentos</option>
+<option>Ingeniería</option>
+<option>Diseño</option>
+<option>Producto</option>
+<option>Marketing</option>
+</select>
+<select class="bg-surface border border-outline-variant rounded-md px-3 py-1.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-secondary">
+<option>Todas las Ubicaciones</option>
+<option>Nueva York</option>
+<option>Londres</option>
+<option>Remoto</option>
+</select>
+<button class="px-3 py-1.5 text-secondary border border-secondary rounded-md text-label-sm font-label-sm hover:bg-secondary-fixed transition-colors">
+                        Más Filtros
+                    </button>
+</div>
+<div class="flex bg-surface border border-outline-variant rounded-md overflow-hidden p-0.5">
+<button class="px-3 py-1 bg-surface-container-low text-on-surface rounded shadow-sm flex items-center">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+</button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface flex items-center">
+<span class="material-symbols-outlined text-sm">list</span>
+</button>
+</div>
+</div>
+<!-- Employee Grid (Bento style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="flex items-start gap-4 mb-4">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface" data-alt="Professional headshot of a female software engineer smiling slightly. Well-lit modern office background with soft bokeh. Corporate light mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA63HRL8jDNaiZZUSG7M4C2PvHxL9hxG90WMkjQNYqmhRt5WjSw_MYnRIT4bF4HEPwYgxlSc61NvOsMV912zK2jVOzNF-g3eahCHQqhAE-fhePVY06L352u6f1UuUOZV4qSkhYBRYq5zuIKlzCOxXfX2Xww5kQ78ZXn0H_Fm4kHyeMtEHeo8ef31f04Rp46eIYx4OuV83h6CLjy-XTR8jferiizfrJcrDmNmirxJeX1PfFvYqFhbq0z"/>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Sarah Jenkins</h3>
+<p class="text-body-md font-body-md text-secondary font-medium">Ingeniera Frontend Senior</p>
+<div class="flex items-center gap-1 mt-1">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Activo</span>
+</div>
+</div>
+</div>
+<div class="space-y-2 mt-4 pt-4 border-t border-surface-variant">
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">domain</span> Ingeniería
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span> Sede en Nueva York
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span> s.jenkins@orggraph.com
+                        </div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="flex items-start gap-4 mb-4">
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-headline-lg font-headline-lg border-2 border-surface">
+                            MC
+                        </div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Marcus Chen</h3>
+<p class="text-body-md font-body-md text-secondary font-medium">Líder de Diseño de Producto</p>
+<div class="flex items-center gap-1 mt-1">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Activo</span>
+</div>
+</div>
+</div>
+<div class="space-y-2 mt-4 pt-4 border-t border-surface-variant">
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">domain</span> Diseño
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span> Remoto - Reino Unido
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span> m.chen@orggraph.com
+                        </div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="flex items-start gap-4 mb-4">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface" data-alt="Professional portrait of a male product manager looking confident. Bright, airy corporate environment. High key lighting, clean modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB63i7kT_ZKufdQUjgdahg1mlC7LAI4zIMC4dmZEME53WfNI1KMAGJ-jVlJHI8hU3Gf8L3X4W2cPYxmokmu-pCI6ujwCN8o-EKBN0ZI8IVCMXsA_Xer5tMowLyL0NkzYaGlDq5MNE7cHYSc7bFSRlUsy7Hrz507W8CECUOzwwanJPwflM6ssbvbzWmF8bcUFgbc6s_Vg0T2dpszjGOdLMcmE1IMELoA_ACaxJHvEw2HeJ10d13I03zR"/>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface">David Rivera</h3>
+<p class="text-body-md font-body-md text-secondary font-medium">Vicepresidente de Producto</p>
+<div class="flex items-center gap-1 mt-1">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Ausente (hasta el viernes)</span>
+</div>
+</div>
+</div>
+<div class="space-y-2 mt-4 pt-4 border-t border-surface-variant">
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">domain</span> Producto
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span> Sede en Nueva York
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span> d.rivera@orggraph.com
+                        </div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="flex items-start gap-4 mb-4">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface" data-alt="Friendly professional photo of a female HR specialist. Bright background, modern corporate style, natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFThi6LNDkSTvO6g_hXAr_n4HKoZkgp1Xcf1IyCRX_8bHwevS9oc7J4KHvdzGvB2g99UgknCRq_HkjpAQPfvR5kPcqDzTryzOx8Z-iGnJ3Q2iRFuBRBKQa6cW2o6sgAmN012HPtqN6svXl0hNedme-T3lEYOgNrrsRDeQeI86itfrUJWN9imBpf74xev7sLd6w2WfJgmhMU2py4W8uHUVQzpiq2GEpuxjuuakqscGh__CnpTnYEb-u"/>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Elena Rodriguez</h3>
+<p class="text-body-md font-body-md text-secondary font-medium">Directora de RRHH</p>
+<div class="flex items-center gap-1 mt-1">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Activo</span>
+</div>
+</div>
+</div>
+<div class="space-y-2 mt-4 pt-4 border-t border-surface-variant">
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">domain</span> Recursos Humanos
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span> Londres
+                        </div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span> e.rodriguez@orggraph.com
+                        </div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-12 mb-8">
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-secondary text-on-primary text-label-sm font-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container text-label-sm font-label-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container text-label-sm font-label-sm">3</button>
+<span class="text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container text-label-sm font-label-sm">12</button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

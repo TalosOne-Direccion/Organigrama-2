@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editor de Organigramas - OrgGraph Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary-container": "#002113",
+                        "surface-tint": "#565e74",
+                        "surface-dim": "#d8dadc",
+                        "surface-variant": "#e0e3e5",
+                        "background": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary-container": "#009668",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-surface": "#191c1e",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "surface": "#f7f9fb",
+                        "surface-bright": "#f7f9fb",
+                        "inverse-primary": "#bec6e0",
+                        "on-primary-container": "#7c839b",
+                        "primary": "#000000",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-primary-fixed": "#131b2e",
+                        "primary-fixed": "#dae2fd",
+                        "on-secondary-container": "#fefcff",
+                        "on-background": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "tertiary": "#000000",
+                        "on-tertiary-fixed": "#002113",
+                        "primary-fixed-dim": "#bec6e0",
+                        "outline": "#76777d",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#2170e4",
+                        "secondary": "#0058be",
+                        "primary-container": "#131b2e",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-surface-variant": "#45464d",
+                        "on-tertiary-fixed-variant": "#005236"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "node-gap-v": "48px",
+                        "node-gap-h": "24px",
+                        "container-padding": "32px",
+                        "gutter": "16px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-display": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["18px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Node structural lines (simulated) */
+        .org-line-vertical { width: 2px; height: 24px; background-color: #c6c6cd; margin: 0 auto; }
+        .org-line-horizontal { height: 2px; background-color: #c6c6cd; }
+        .org-connector-top { border-top: 2px solid #c6c6cd; border-radius: 8px 8px 0 0; }
+        
+        /* Custom scrollbar for canvas */
+        .canvas-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .canvas-scroll::-webkit-scrollbar-track { background: transparent; }
+        .canvas-scroll::-webkit-scrollbar-thumb { background-color: #c6c6cd; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface dark:bg-inverse-surface shadow-sm z-30 flex flex-col h-full py-margin-desktop hidden md:flex">
+<div class="px-gutter mb-8 flex items-center gap-3">
+<img class="w-10 h-10 rounded-DEFAULT object-cover" data-alt="A modern, abstract geometric logo representing a connected organizational structure. High contrast, sharp edges, professional corporate software branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwwUcX5IsXVOzxRCgEW52HCEnT0bzmITKdEfgkyoCvQhU6Ea9wVhyOT0BR5HxfC4iYnxcDydZ8XflZRYU2JA1mdSJThcry_NqzjwH8KqfiorFQt34Rxly0Zq3WVKujvKAokB2jxsFRwHvC4zF9kpHcFQNm_Ofa6JPZ6p5sXw7ps_zjrQoElaiteaGKRDMvsK1JakxkqWC5iapzQnH6lWG8liGsjHVCmXOOgKgAakd1dDJ_Lm6aCM8v"/>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">OrgGraph Pro</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Edición Empresarial</p>
+</div>
+</div>
+<div class="flex-1 px-gutter flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors scale-98 active:opacity-80 transition-all text-body-md font-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:fill">dashboard</span>
+<span>Tablero</span>
+</a>
+<!-- ACTIVE TAB: Chart Editor -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-secondary dark:text-secondary-fixed-dim font-bold border-r-4 border-secondary bg-surface-container-low text-body-md font-body-md scale-98 active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined fill">account_tree</span>
+<span>Editor de Organigramas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors scale-98 active:opacity-80 transition-all text-body-md font-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:fill">groups</span>
+<span>Directorio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors scale-98 active:opacity-80 transition-all text-body-md font-body-md group mt-auto" href="#">
+<span class="material-symbols-outlined group-hover:fill">settings</span>
+<span>Configuración</span>
+</a>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant z-20 flex justify-between items-center px-container-padding w-full hidden md:flex">
+<!-- Search Bar (on_left) -->
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-full text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all shadow-sm" placeholder="Buscar empleados, roles, departamentos..." type="text"/>
+</div>
+</div>
+<!-- Trailing Icon Actions & Profile -->
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-full transition-colors active:opacity-70 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-full transition-colors active:opacity-70 flex items-center justify-center">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-px h-6 bg-outline-variant mx-2"></div>
+<button class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a corporate user, smiling slightly, wearing business casual attire. Clean white background, studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmBKJNWvqfrv43dsm6CpRn812p9dm1k36XusA36aq1dvqafH385IcZ6F-tcHvyygm47NkV4UtBVQKSzlvfZdrrT5_YgjG7DAWSL5eb48RJ5ljGlFgqtnDZYlBE77y773Yz-aI9DiyLqfcfVC0w69zbfJGHhyl2C3sSjCWmJJXUpufjFYXB1HFdSgzFB1p6LDzEQbqEUGsQVJCQTB9PiPX3oyig6oyhbdYRzBAr6kc_jDuzjtuwdwpW"/>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-64 mt-0 md:mt-16 w-full h-[calc(100vh-4rem)] flex relative overflow-hidden bg-background">
+<!-- Fluid Canvas Container -->
+<div class="flex-1 relative overflow-auto canvas-scroll cursor-grab active:cursor-grabbing p-margin-desktop" id="chart-canvas">
+<!-- Canvas Grid Background Pattern -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 24px 24px;"></div>
+<!-- Floating Toolbar -->
+<div class="fixed bottom-margin-desktop left-1/2 -translate-x-1/2 bg-surface-container-lowest border border-outline-variant shadow-lg rounded-full p-2 flex items-center gap-2 z-10 hidden md:flex">
+<button class="p-2 text-on-surface hover:bg-surface-container hover:text-secondary rounded-full transition-colors flex items-center justify-center" title="Zoom Out">
+<span class="material-symbols-outlined">zoom_out</span>
+</button>
+<span class="text-label-sm font-label-sm text-on-surface-variant px-2">100%</span>
+<button class="p-2 text-on-surface hover:bg-surface-container hover:text-secondary rounded-full transition-colors flex items-center justify-center" title="Zoom In">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<div class="w-px h-6 bg-outline-variant mx-1"></div>
+<button class="p-2 text-on-surface hover:bg-surface-container hover:text-secondary rounded-full transition-colors flex items-center justify-center" title="Fit to Screen">
+<span class="material-symbols-outlined">fit_screen</span>
+</button>
+<button class="p-2 text-on-surface hover:bg-surface-container hover:text-secondary rounded-full transition-colors flex items-center justify-center" title="Export Chart">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- Org Tree Layout -->
+<div class="min-w-max min-h-max pt-10 pb-32 flex flex-col items-center">
+<!-- Root Node (CEO) -->
+<div class="flex flex-col items-center">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 w-64 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-lg transition-shadow cursor-pointer relative group">
+<!-- Department Accent Line -->
+<div class="absolute top-0 left-0 w-full h-1 bg-primary rounded-t-lg"></div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Professional headshot of a female executive in her 40s. Business attire, confident expression, studio lighting, corporate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ0QHXtD_qiBp2bdN9wrUoKOtz0XQZvOjYgaq_26P9z-BWUttN0hJwRrdAl7JWyYRbuONzqhi7qQUNcq5MtiZKMNOhqy-7taLIFfjI1iPK0FfYqj88cO2KPRCvyimzuZKMyLzcQjtm5wHYtsA5B1hVS9x7x7Z68NI6AyYS5FFzahULi92wHlv9o47O0YqI-sYPIxm_rrQJGFLrIQyLd4XkXpkTr_PfxHN4gVawLeTx6W3EvJQlASnE"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed-dim border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface line-clamp-1">Sarah Jenkins</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Directora Ejecutiva (CEO)</p>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2">
+<span>Ejecutivo</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">groups</span> 4 Directos</span>
+</div>
+</div>
+<div class="org-line-vertical h-node-gap-v"></div>
+<!-- Level 1 (VPs) -->
+<div class="flex flex-col items-center w-full">
+<!-- Horizontal connector line for Level 1 -->
+<div class="w-[800px] flex justify-between relative">
+<div class="absolute top-0 left-0 w-full border-t-2 border-outline-variant h-4 rounded-t-lg -mt-[2px]"></div>
+</div>
+<div class="flex gap-node-gap-h pt-4">
+<!-- Node 1: Engineering -->
+<div class="flex flex-col items-center">
+<div class="org-line-vertical -mt-4 mb-0"></div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 w-64 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-lg transition-shadow cursor-pointer relative group">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary rounded-t-lg"></div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Headshot of a male engineering leader in his 30s. Smart casual attire, glasses, friendly expression, well-lit modern office setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8ZI1iMbmxfbDQu54MOmDC3K1wKhlkmt6Aoyi6sfDZyVnS0ba659LUQHdcO6sWc26Il5zbyUaHhpCmLwa0OQ_JKdfQs_xAOvTJih6FJ_rIJ8Qci_xrPmHCJJepsgk20-gmO2nAVxiXsL6gswYsFylkWZ__NzV6ZOqPbqqZEOMXk981OE1M-wymIIBU5WojJgeGJq4_5QmUO6-NxAcEnEUfsiMP6H011kvp8mZ0eD4_DmkQIO5_1lhf"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed-dim border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface line-clamp-1">David Chen</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">VP de Ingeniería</p>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2">
+<span>Ingeniería</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">groups</span> 24 Total</span>
+</div>
+</div>
+<!-- Expand button (simulated interaction) -->
+<button class="mt-2 w-6 h-6 rounded-full bg-surface-container-low border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-secondary hover:text-on-secondary hover:border-secondary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<!-- Node 2: Product -->
+<div class="flex flex-col items-center">
+<div class="org-line-vertical -mt-4 mb-0"></div>
+<!-- ACTIVE/SELECTED NODE -->
+<div class="bg-surface-container-lowest border-2 border-secondary rounded-lg p-4 w-64 shadow-lg cursor-pointer relative group transform -translate-y-1 transition-transform">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary rounded-t-sm"></div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover ring-2 ring-secondary ring-offset-2 ring-offset-surface-container-lowest" data-alt="Headshot of a non-binary product leader. Creative modern attire, short hair, neutral background, crisp lighting, confident." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr_qQNYr0HcQ-eKeMCeCz2-VUGH0KYlqDfZn8fQUFirT0bl0f8DXPAacb2vHpVa6227Nvd2vAU2YvIVtXebfJgJmtUHqpf1JTxAtjef78IwI8p8NVRzm-0OM0dhzsE-6_Lntj39tbfxDD5CkzB4E-qc_G6G-kB2eD6ScZuNEoTGpMuYIASVKkByKXiyzv68A2zrtlQINMLDCn2fPlWQHZshqnIgE3_zf8tWMmE36tPPFHiWCmaUBG2"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed-dim border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface line-clamp-1 font-bold">Alex Rivera</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">VP de Producto</p>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2">
+<span>Gestión de Producto</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">groups</span> 12 Total</span>
+</div>
+</div>
+<div class="org-line-vertical h-12 mb-0"></div>
+<!-- Sub-level under Product -->
+<div class="flex flex-col items-center w-full">
+<div class="w-[280px] flex justify-between relative">
+<div class="absolute top-0 left-0 w-full border-t-2 border-outline-variant h-4 rounded-t-lg -mt-[2px]"></div>
+</div>
+<div class="flex gap-node-gap-h pt-4">
+<!-- Sub Node 1 -->
+<div class="flex flex-col items-center">
+<div class="org-line-vertical -mt-4 mb-0"></div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 w-56 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-lg transition-shadow cursor-pointer relative">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary rounded-t-lg"></div>
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Headshot of a young male product manager. Casual button-down shirt, warm smile, bright office lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNBZZvt_3beKnWuJ_kmA3h1tZ2kBOViRVbEpXfKOwvvdRxohbSVvFdr8uPXeqKfZCOs0eODIvOVULy5NwijKt-8Q27Bc99fkd5_3pmJVxNhtG3jWgh-uU6f46-MDRvXR_vs2JHjyRJLpEXcAFMl71veYj1wwaadrTsBlgsxmUegNJEQw2BQC7WOMyT1g6YtMoHEo2RJDFitZWLU9U8DN6XXnrN6fFLxWLBfcjECUOjdwIITtHbp2fn"/>
+<div>
+<h3 class="text-body-md font-body-md font-semibold text-on-surface line-clamp-1">Marcus Thorne</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Director de PM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sub Node 2 -->
+<div class="flex flex-col items-center">
+<div class="org-line-vertical -mt-4 mb-0"></div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 w-56 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-lg transition-shadow cursor-pointer relative">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary rounded-t-lg"></div>
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Headshot of a female UX Director. Stylish glasses, dark background, professional and creative vibe, soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIsr_OFarRiPHdT35OaVXR-oYJ3MnQec-7-9dLgNG7kwMV7j8Byj1_adQMyFkkHb1gSZx_7TIhJtvDcr0i6CxyGEfzvsTxO6MD9tzBfIP0cp2Yu1HJwUgGAP9RUsVPVV9_Z0jomGeSgfyONYSxM9hFCPZL8RJv7_ChhyQ0V4HV8sUSf5tV6nw0I_sObTaapeoo-I7uQHxnlmZ6Ny8i_QU_-9utoDqEehNUNz4dtQildWJ0l47QBE1f"/>
+<div>
+<h3 class="text-body-md font-body-md font-semibold text-on-surface line-clamp-1">Elena Rostova</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Directora de UX</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Node 3: Sales -->
+<div class="flex flex-col items-center">
+<div class="org-line-vertical -mt-4 mb-0"></div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 w-64 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-lg transition-shadow cursor-pointer relative group">
+<div class="absolute top-0 left-0 w-full h-1 bg-error rounded-t-lg"></div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant text-headline-md font-headline-md font-bold">JW</div>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-surface-variant border-2 border-surface-container-lowest rounded-full" title="Offline"></span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface line-clamp-1">James Wright</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">VP de Ventas</p>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2">
+<span>Ventas</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">groups</span> 45 Total</span>
+</div>
+</div>
+<button class="mt-2 w-6 h-6 rounded-full bg-surface-container-low border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-secondary hover:text-on-secondary hover:border-secondary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<!-- Node 4: Marketing -->
+<div class="flex flex-col items-center">
+<div class="org-line-vertical -mt-4 mb-0"></div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 w-64 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] hover:shadow-lg transition-shadow cursor-pointer relative group">
+<div class="absolute top-0 left-0 w-full h-1 bg-on-tertiary-container rounded-t-lg"></div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Headshot of a female marketing leader. Vibrant corporate background, smiling, wearing a blazer, confident posture, bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfGlst6x02GiD3FshtDNn_zDZsgnnvP0-uQwznQUagJjoO2CD54ROT48NAvUCBFUt1DD4xn4r9gG9SJ0GqsWxt0cihtlC2UDjtuCZlzm146HVFxPk9_0jR9juvZhIQVU1SXvLbhH2-CDjV5h_1i0AwZM9u4oEqkjHe-BxkNelP6XgNxYWX_vFE8D8RClL2EdrLc0XdtncMLJB6NfkeA478AJkjGit2Ek4WY-Kpt73PUVpG7YgwP9ty"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed-dim border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface line-clamp-1">Chloe Kim</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">CMO</p>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2">
+<span>Marketing</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">groups</span> 18 Total</span>
+</div>
+</div>
+<button class="mt-2 w-6 h-6 rounded-full bg-surface-container-low border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-secondary hover:text-on-secondary hover:border-secondary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Details Panel (Right Sidebar) -->
+<aside class="w-80 h-full bg-surface-container-lowest border-l border-outline-variant flex flex-col shadow-[-4px_0_15px_-5px_rgba(0,0,0,0.05)] z-20 flex-shrink-0 transition-transform transform translate-x-0 hidden lg:flex">
+<!-- Panel Header -->
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface">
+<h2 class="text-headline-md font-headline-md font-semibold text-on-surface">Detalles del Empleado</h2>
+<button class="p-1 text-on-surface-variant hover:bg-surface-container rounded transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Panel Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+<!-- Profile Header -->
+<div class="flex flex-col items-center text-center">
+<img class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm border-2 border-surface" data-alt="Headshot of a non-binary product leader. Creative modern attire, short hair, neutral background, crisp lighting, confident." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoBptQBauAGweC2AWiOsWUHDpcmCKQDhFMo8k5b2Sry2Cs8KrTcy2Z35rk5SPoG-pSFHv0z3J8ndTKTHc5f9Q4-OiSksVOoEeCJgGl47erngNoC2Yca_gQj5rTRzyXg6QHN7pSIiGhwuMvjE-YfluAUlYuDKYTleq8s1JLRQopS92eyS4wA27eSXJ2GsguIINwlbYG746YCZ3qfC0u_7byxUY3LRqyFqq5prk2RzgFT7CA-0m688yM"/>
+<h3 class="text-headline-lg font-headline-lg font-bold text-on-surface">Alex Rivera</h3>
+<p class="text-body-md font-body-md text-secondary font-medium mt-1">VP de Producto</p>
+<span class="mt-2 inline-flex items-center px-2 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-label-sm font-label-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-fixed mr-1.5"></span> Activo
+                    </span>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-2 w-full">
+<button class="flex-1 bg-secondary text-on-secondary py-2 px-4 rounded-DEFAULT text-label-caps font-label-caps hover:opacity-90 transition-opacity shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span> Editar
+                    </button>
+<button class="flex-1 bg-surface-container text-on-surface py-2 px-4 rounded-DEFAULT text-label-caps font-label-caps hover:bg-surface-container-high transition-colors border border-outline-variant flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">move_item</span> Mover
+                    </button>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Details Form/View -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Departamento</label>
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface bg-surface-container-low p-2 rounded border border-outline-variant">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+                            Gestión de Producto
+                        </div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Reporta a</label>
+<div class="flex items-center gap-3 text-body-md font-body-md text-on-surface bg-surface-container-low p-2 rounded border border-outline-variant cursor-pointer hover:bg-surface-container transition-colors">
+<img class="w-6 h-6 rounded-full object-cover" data-alt="Professional headshot of a female executive in her 40s. Business attire, confident expression, studio lighting, corporate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuGtT8PxgBiWTsSFfFM_WrP_hYmZfPGmIyCyT062B7HGwIlFDbxVAwJWc9z5chxERUoaj7dR1MjSRyxlLiu4GU3c1ejRWIEAnZFpJ4Sd4n0RhcB2wSjahMkabURxeglvozBR5sEUkDH_83TovGFEOEQ4ySl3_1pgcerK0v5LVxOM9-_l_DM56Eai481js54tJM1_THjSoI3C9N9c3W1MJvrikhai5kdXEF3u-_2LCXDpxx13LHvyW6"/>
+<span>Sarah Jenkins (CEO)</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Reportes Directos</label>
+<div class="text-body-md font-body-md text-on-surface p-2 border border-outline-variant rounded">
+<div class="flex justify-between items-center mb-2">
+<span class="font-medium">2 Gerentes</span>
+<span class="text-on-surface-variant text-label-sm">12 Total Org</span>
+</div>
+<ul class="text-sm space-y-2">
+<li class="flex items-center gap-2 hover:bg-surface-container p-1 rounded cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">person</span>
+                                    Marcus Thorne
+                                </li>
+<li class="flex items-center gap-2 hover:bg-surface-container p-1 rounded cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">person</span>
+                                    Elena Rostova
+                                </li>
+</ul>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Ubicación y Contacto</label>
+<div class="text-body-md font-body-md text-on-surface space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">location_on</span>
+                                San Francisco, CA (HQ)
+                            </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">mail</span>
+                                a.rivera@orggraph.pro
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<script>
+        // Simple script to allow drag-to-scroll on the canvas
+        const canvas = document.getElementById('chart-canvas');
+        let isDown = false;
+        let startX;
+        let startY;
+        let scrollLeft;
+        let scrollTop;
+
+        canvas.addEventListener('mousedown', (e) => {
+            // Only drag if clicking on the background, not nodes
+            if (e.target === canvas || e.target.classList.contains('absolute')) {
+                isDown = true;
+                canvas.classList.add('active');
+                startX = e.pageX - canvas.offsetLeft;
+                startY = e.pageY - canvas.offsetTop;
+                scrollLeft = canvas.scrollLeft;
+                scrollTop = canvas.scrollTop;
+            }
+        });
+        canvas.addEventListener('mouseleave', () => { isDown = false; canvas.classList.remove('active'); });
+        canvas.addEventListener('mouseup', () => { isDown = false; canvas.classList.remove('active'); });
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - canvas.offsetLeft;
+            const y = e.pageY - canvas.offsetTop;
+            const walkX = (x - startX) * 1.5; // Scroll-fast
+            const walkY = (y - startY) * 1.5;
+            canvas.scrollLeft = scrollLeft - walkX;
+            canvas.scrollTop = scrollTop - walkY;
+        });
+        
+        // Initial center scroll position slightly
+        window.addEventListener('load', () => {
+            canvas.scrollLeft = 200;
+        });
+    </script>
+</body></html>
