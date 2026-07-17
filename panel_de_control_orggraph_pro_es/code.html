@@ -104,6 +104,23 @@
         .node-shadow { box-shadow: 0px 4px 6px -1px rgba(0,0,0,0.1); }
         .node-hover-lift:hover { transform: translateY(-2px); box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1); }
     </style>
+<style id="yellow-theme">
+  .bg-primary{background-color:#9a6a00!important}
+  .bg-secondary{background-color:#9a6a00!important}
+  .bg-secondary-container{background-color:#9a6a00!important}
+  .bg-primary-container{background-color:#845a00!important}
+  .bg-secondary-fixed{background-color:#ffe1a3!important}
+  .hover\:bg-secondary-fixed:hover{background-color:#ffe1a3!important}
+  .hover\:bg-primary\/90:hover{background-color:#845a00!important}
+  .hover\:bg-secondary\/5:hover{background-color:#fff6e0!important}
+  .text-primary{color:#9a6a00!important}
+  .text-secondary{color:#9a6a00!important}
+  .hover\:text-primary:hover{color:#9a6a00!important}
+  .border-primary{border-color:#9a6a00!important}
+  .border-secondary{border-color:#9a6a00!important}
+  .focus\:ring-secondary:focus{--tw-ring-color:#9a6a00!important}
+  .focus\:border-secondary:focus{border-color:#9a6a00!important}
+</style>
 </head>
 <body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
 <!-- SideNavBar -->
@@ -149,7 +166,7 @@
 </div>
 <div class="px-gutter mt-auto">
 <div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low border border-outline-variant">
-<img class="w-8 h-8 rounded-full object-cover" data-alt="A professional headshot of a corporate executive in a bright modern office setting. Light mode, professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWw4bReYXMGQz-quj0u6W7pXB4D38eawgRnQDAOp5_HBZbMCBzVB0fL97KUHKmQRziiRelJ5iFocd1VWlxKoMk-UUKh5pI41VXQ6zdC4D4oJgosm0oZbxjiBonogNqE_Gjg1LHGXUvK0z6p1WWahku0emwW-nTTSPGsKSCSWWcQIyke97cRRZCk4foFPVAjeg7CmljKLqu2aMwuvuu7oj9MDymxXKs_dxxuOpmORchpKPAqFb9MZ7-"/>
+<img class="w-8 h-8 rounded-full object-cover js-user-avatar" data-alt="A professional headshot of a corporate executive in a bright modern office setting. Light mode, professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWw4bReYXMGQz-quj0u6W7pXB4D38eawgRnQDAOp5_HBZbMCBzVB0fL97KUHKmQRziiRelJ5iFocd1VWlxKoMk-UUKh5pI41VXQ6zdC4D4oJgosm0oZbxjiBonogNqE_Gjg1LHGXUvK0z6p1WWahku0emwW-nTTSPGsKSCSWWcQIyke97cRRZCk4foFPVAjeg7CmljKLqu2aMwuvuu7oj9MDymxXKs_dxxuOpmORchpKPAqFb9MZ7-"/>
 <div class="flex-1 min-w-0">
 <p class="text-label-sm font-label-sm text-on-surface truncate">Administrador</p>
 <p class="text-[10px] text-on-surface-variant truncate">Sede Global</p>
@@ -173,7 +190,7 @@
 <span class="material-symbols-outlined">help</span>
 </button>
 <div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden cursor-pointer">
-<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User Profile Avatar. Professional corporate portrait, bright lighting, light mode palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRCcDq87YCoPsLr-tB0JZd_kfmuzQ3f1l07Ap94DD8-7km6qtkS1RynbfJ8mo3UKFC1AfInFLKnnHlVvC7sUy5hwI5qX_h7inc1j0pxrokuOZ_lJru6bnihK3eK9vBNbY4luE7mutk9PX5wpXSpMQwEdcMAINLBF4p0d84hzwpS-xAscTzK247X7pi5UDxZ880ZImbwjLGXrWS1-3qNfcr4QhedC29zUAxAqygBEFeicVoKYBBLmHl"/>
+<img alt="User Profile Avatar" class="w-full h-full object-cover js-user-avatar" data-alt="User Profile Avatar. Professional corporate portrait, bright lighting, light mode palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRCcDq87YCoPsLr-tB0JZd_kfmuzQ3f1l07Ap94DD8-7km6qtkS1RynbfJ8mo3UKFC1AfInFLKnnHlVvC7sUy5hwI5qX_h7inc1j0pxrokuOZ_lJru6bnihK3eK9vBNbY4luE7mutk9PX5wpXSpMQwEdcMAINLBF4p0d84hzwpS-xAscTzK247X7pi5UDxZ880ZImbwjLGXrWS1-3qNfcr4QhedC29zUAxAqygBEFeicVoKYBBLmHl"/>
 </div>
 </div>
 </header>
@@ -315,4 +332,28 @@
 </div>
 </div>
 </main>
+<script>
+(function(){
+  var navMap={'panel':'../panel_de_control_orggraph_pro_es/code.html','editor':'../editor_de_organigramas_orggraph_pro_es/code.html','directorio':'../directorio_de_empleados_orggraph_pro_es/code.html','ajuste':'../ajustes_orggraph_pro_es/code.html','configuraci':'../ajustes_orggraph_pro_es/code.html'};
+  document.querySelectorAll('nav a').forEach(function(a){
+    var t=(a.textContent||'').trim().toLowerCase();
+    for(var k in navMap){ if(t.indexOf(k)!==-1){ a.setAttribute('href',navMap[k]); break; } }
+  });
+  var KEY='orggraph_avatar';
+  function avatars(){return document.querySelectorAll('.js-user-avatar');}
+  try{var saved=localStorage.getItem(KEY); if(saved){avatars().forEach(function(img){img.src=saved;});}}catch(e){}
+  var input=document.createElement('input');
+  input.type='file'; input.accept='image/*'; input.style.display='none';
+  document.body.appendChild(input);
+  input.addEventListener('change',function(e){
+    var f=e.target.files&&e.target.files[0]; if(!f)return;
+    var r=new FileReader();
+    r.onload=function(ev){var src=ev.target.result; avatars().forEach(function(img){img.src=src;}); try{localStorage.setItem(KEY,src);}catch(err){}};
+    r.readAsDataURL(f);
+  });
+  function openPicker(){input.value='';input.click();}
+  avatars().forEach(function(img){img.style.cursor='pointer';img.title='Cambiar foto de perfil';img.addEventListener('click',openPicker);});
+  document.querySelectorAll('[data-avatar-trigger]').forEach(function(el){el.style.cursor='pointer';el.addEventListener('click',openPicker);});
+})();
+</script>
 </body></html>

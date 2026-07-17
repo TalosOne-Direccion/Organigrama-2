@@ -104,6 +104,23 @@
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .icon-fill { font-variation-settings: 'FILL' 1; }
     </style>
+<style id="yellow-theme">
+  .bg-primary{background-color:#9a6a00!important}
+  .bg-secondary{background-color:#9a6a00!important}
+  .bg-secondary-container{background-color:#9a6a00!important}
+  .bg-primary-container{background-color:#845a00!important}
+  .bg-secondary-fixed{background-color:#ffe1a3!important}
+  .hover\:bg-secondary-fixed:hover{background-color:#ffe1a3!important}
+  .hover\:bg-primary\/90:hover{background-color:#845a00!important}
+  .hover\:bg-secondary\/5:hover{background-color:#fff6e0!important}
+  .text-primary{color:#9a6a00!important}
+  .text-secondary{color:#9a6a00!important}
+  .hover\:text-primary:hover{color:#9a6a00!important}
+  .border-primary{border-color:#9a6a00!important}
+  .border-secondary{border-color:#9a6a00!important}
+  .focus\:ring-secondary:focus{--tw-ring-color:#9a6a00!important}
+  .focus\:border-secondary:focus{border-color:#9a6a00!important}
+</style>
 </head>
 <body class="antialiased min-h-screen flex">
 <!-- SideNavBar -->
@@ -154,7 +171,7 @@
 <span class="material-symbols-outlined">help</span>
 </button>
 <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2">
-<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a modern office setting. Crisp lighting, shallow depth of field, high-resolution portrait reflecting modern enterprise aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByENq9mop2GG_Ak8G7hUH6-ubtIMoZ1oWqVLcgr8jwQ_NCr7ydxSZgZBL8eqJ1mbIwmI18PrGiSxrWy-NQRkSTEMcH9ZUT89gOgsc_J9XDc06-r-K1ckDFDqMLFVe2jp_nkSsylE4Wp51XaL7UDHr5x6Df71Eo5DIc1p8IsCFbLgIEJPGehFFHSG8szifZyzTb9oKLFv6pmcqmUtYyMpPFaFV0_XNtV_rVGRzVGOy1ex0hzf42zmkV"/>
+<img alt="User Profile Avatar" class="w-full h-full object-cover js-user-avatar" data-alt="A professional headshot of a corporate executive in a modern office setting. Crisp lighting, shallow depth of field, high-resolution portrait reflecting modern enterprise aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByENq9mop2GG_Ak8G7hUH6-ubtIMoZ1oWqVLcgr8jwQ_NCr7ydxSZgZBL8eqJ1mbIwmI18PrGiSxrWy-NQRkSTEMcH9ZUT89gOgsc_J9XDc06-r-K1ckDFDqMLFVe2jp_nkSsylE4Wp51XaL7UDHr5x6Df71Eo5DIc1p8IsCFbLgIEJPGehFFHSG8szifZyzTb9oKLFv6pmcqmUtYyMpPFaFV0_XNtV_rVGRzVGOy1ex0hzf42zmkV"/>
 </div>
 </div>
 </header>
@@ -335,4 +352,28 @@
 </div>
 </main>
 </div>
+<script>
+(function(){
+  var navMap={'panel':'../panel_de_control_orggraph_pro_es/code.html','editor':'../editor_de_organigramas_orggraph_pro_es/code.html','directorio':'../directorio_de_empleados_orggraph_pro_es/code.html','ajuste':'../ajustes_orggraph_pro_es/code.html','configuraci':'../ajustes_orggraph_pro_es/code.html'};
+  document.querySelectorAll('nav a').forEach(function(a){
+    var t=(a.textContent||'').trim().toLowerCase();
+    for(var k in navMap){ if(t.indexOf(k)!==-1){ a.setAttribute('href',navMap[k]); break; } }
+  });
+  var KEY='orggraph_avatar';
+  function avatars(){return document.querySelectorAll('.js-user-avatar');}
+  try{var saved=localStorage.getItem(KEY); if(saved){avatars().forEach(function(img){img.src=saved;});}}catch(e){}
+  var input=document.createElement('input');
+  input.type='file'; input.accept='image/*'; input.style.display='none';
+  document.body.appendChild(input);
+  input.addEventListener('change',function(e){
+    var f=e.target.files&&e.target.files[0]; if(!f)return;
+    var r=new FileReader();
+    r.onload=function(ev){var src=ev.target.result; avatars().forEach(function(img){img.src=src;}); try{localStorage.setItem(KEY,src);}catch(err){}};
+    r.readAsDataURL(f);
+  });
+  function openPicker(){input.value='';input.click();}
+  avatars().forEach(function(img){img.style.cursor='pointer';img.title='Cambiar foto de perfil';img.addEventListener('click',openPicker);});
+  document.querySelectorAll('[data-avatar-trigger]').forEach(function(el){el.style.cursor='pointer';el.addEventListener('click',openPicker);});
+})();
+</script>
 </body></html>
